@@ -15,9 +15,12 @@ wavwrite(wav, "./doc/chirpQuadratic.wav", Fs=fs, nbits=32)
 wav = chirp(T, fs, fl, fh; method="logarithmic");
 wavwrite(wav, "./doc/chirpLogarithmic.wav", Fs=fs, nbits=32)
 
+wav = chirp(T, fs, fl, fh; method="exponential");
+wavwrite(wav, "./doc/chirpExponential.wav", Fs=fs, nbits=32)
+
 fun(t) = 2000*t
 wav = chirp(2.0, 16000.0, fun)
 wavwrite(wav, "./doc/0_4000hz_linear.wav", Fs=fs, nbits=32)
 
-wav = chirp(2.0, 16000.0, t -> 2000*t^2 )
+wav = chirp(2.0, 16000.0, t -> 2000*t^2)
 wavwrite(wav, "./doc/0_8000hz_quadratic.wav", Fs=fs, nbits=32)

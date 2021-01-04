@@ -16,6 +16,9 @@ using ChirpSignal
     wav = chirp(T, fs, fl, fh; method="logarithmic");
     println("logarithmic chirp ...");
 
+    wav = chirp(T, fs, fl, fh; method="exponential");
+    println("exponential chirp ...");
+
     fun(x) = 2000*x
     wav = chirp(2.0, 16000.0, fun);
     wav = chirp(1.0, 16000.0, x -> 2000*x^2);

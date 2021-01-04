@@ -16,13 +16,14 @@ Chirp Swept-frequency sine generator.
 - `fs`    : sampling rate
 - `fl`    : lower frequency at the ending time step, fl <= fs
 - `fh `   : higher frequency at the ending time step, fh <= fs
-- `phase` : phase of the chirp sigal, like cos(wt + phase)
-- `method`: available methods are 'linear','quadratic', and 'logarithmic'; the default is 'linear'
+- `phase` : phase of the chirp sigal, like sin(wt + phase)
+- `method`: available methods are 'linear','quadratic','exponential' and 'logarithmic'; the default is 'linear'
 """
 function chirp(T, fs, fl, fh; method="linear", phase=0.0)
     method == "linear" && return chirpLinear(T, fs, fl, fh; phase=phase)
     method == "quadratic" && return chirpQuadratic(T, fs, fl, fh; phase=phase)
     method == "logarithmic" && return chirpLogarithmic(T, fs, fl, fh; phase=phase)
+    method == "exponential" && return chirpExponential(T, fs, fl, fh; phase=phase)
 end
 
 
@@ -48,6 +49,19 @@ end
 
 
 function chirpLogarithmic(T, fs, fl, fh; phase=0.0)
+    # f(t) = k*log(t+1) + fl, k = (fh-fl)/log(T+1)
+    # F(t) = k*(t+1)*log(t+1) + (fl-k)*t
+    (fl <= fh) || error("fl <= fh not met")
+    Δt = 1.0/fs;
+    fl = min(fs/2,max(0,fl));
+    fh = min(fs/2,max(0,fh));
+    t  = 0:Δt:T-Δt;
+    k  = (fh-fl)/log(T+1);
+    y  = @. sin(6.2831853*( k*(t+1)*log(t+1) + (fl-k)*t ) + phase);
+end
+
+
+function chirpExponential(T, fs, fl, fh; phase=0.0)
     # f(t) = exp(k * t) + (fl-1), k = 1/T*log(fh-fl+1)
     # F(t) = 1/k * exp(k * t) + (fl-1)*t
     (fl <= fh) || error("fl <= fh not met")
@@ -68,7 +82,7 @@ Function customizable chirp swept-frequency sine generator.
 - `T`     : signal's length in second
 - `fs`    : sampling rate
 - `f`     : function that defines how the frequency changes vs time
-- `phase` : phase of the chirp sigal, like cos(wt + phase)
+- `phase` : phase of the chirp sigal, like sin(wt + phase)
 """
 function chirp(T, fs, f::Function; phase::Real=0.0)
     Δt = 1.0/fs;

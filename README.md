@@ -39,21 +39,28 @@ T  = 5.0 ;    # total time of chirp signal
 wav = chirp(T, fs, fl, fh; method="linear");
 wavwrite(wav, "./doc/chirpLinear.wav", Fs=fs, nbits=32)
 ```
-![chirpLinear_500_8000hz](/doc/chirpLinear_500_8000hz.png)
+![chirpLinear_500_8000Hz](/doc/chirpLinear_500_8000Hz.png)
 
 ### Quadratic chirp example
 ```julia
 wav = chirp(T, fs, fl, fh; method="quadratic");
 wavwrite(wav, "./doc/chirpQuadratic.wav", Fs=fs, nbits=32)
 ```
-![chirpQuadratic_500_8000hz](/doc/chirpQuadratic_500_8000hz.png)
+![chirpQuadratic_500_8000Hz](/doc/chirpQuadratic_500_8000Hz.png)
 
 ### Logarithmic chirp example
 ```julia
 wav = chirp(T, fs, fl, fh; method="logarithmic");
 wavwrite(wav, "./doc/chirpLogarithmic.wav", Fs=fs, nbits=32)
 ```
-![chirpLogarithmic_500_8000hz](/doc/chirpLogarithmic_500_8000hz.png)
+![chirpLogarithmic_500_8000Hz](/doc/chirpLogarithmic_500_8000Hz.png)
+
+### Exponential chirp example
+```julia
+wav = chirp(T, fs, fl, fh; method="exponential");
+wavwrite(wav, "./doc/chirpExponential.wav", Fs=fs, nbits=32)
+```
+![chirpExponential_500_8000Hz](/doc/chirpExponential_500_8000Hz.png)
 
 ### Customizable chirp example by user's own function
 Customizable chirp by specifying `fun(t) = 2000*t`
@@ -62,12 +69,15 @@ fun(t) = 2000*t
 wav = chirp(2.0, 16000.0, fun)
 wavwrite(wav, "./doc/0_4000hz_linear.wav", Fs=fs, nbits=32)
 ```
-![0_4000hz_linear](/doc/0_4000hz_linear.png)
+![0_4000Hz_linear](/doc/0_4000Hz_linear.png)
 
 ### Customizable chirp example by user's anonymous function
 Customizable chirp by specifying a anonymous function `t -> 2000*t^2`
 ```julia
 wav = chirp(2.0, 16000.0, t -> 2000*t^2 )
-wavwrite(wav, "./doc/0_8000hz_quadratic.wav", Fs=fs, nbits=32)
+wavwrite(wav, "./doc/0_8000Hz_quadratic.wav", Fs=fs, nbits=32)
 ```
-![0_8000hz_quadratic](/doc/0_8000hz_quadratic.png)
+![0_8000hz_quadratic](/doc/0_8000Hz_quadratic.png)
+
+### PS
+For `method="linear"` and `method="quadratic"` cases, the lower bound frequency `fl` could be set lager than the upper bound frequency `fh`, but not for the `method="logarithmic"` and `method="exponential"`.
