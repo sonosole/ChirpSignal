@@ -75,7 +75,7 @@ end
 
 
 """
-    chirp(T, fs, f::Function; phase::Real=0.0) -> Array{Float64,1}
+    chirp(T, fs, f::Function; phase=0.0) -> Array{Float64,1}
 
 Function customizable chirp swept-frequency sine generator.
 # Arguments
@@ -84,7 +84,7 @@ Function customizable chirp swept-frequency sine generator.
 - `f`     : function that defines how the frequency changes vs time
 - `phase` : phase of the chirp sigal, like sin(wt + phase)
 """
-function chirp(T, fs, f::Function; phase::Real=0.0)
+function chirp(T, fs, f::Function; phase=0.0)
     Δt = 1.0/fs;
     τ  = 0:Δt:T-Δt;
     ϕ  = zeros(length(τ),1);
