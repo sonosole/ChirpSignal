@@ -36,6 +36,7 @@ T  = 5.0 ;    # total time of chirp signal
 
 ### Linear chirp example
 ```julia
+# f(t) = (fh-fl)/T * t + fl
 wav = chirp(T, fs, fl, fh; method="linear");
 wavwrite(wav, "./doc/chirpLinear.wav", Fs=fs, nbits=32)
 ```
@@ -43,6 +44,7 @@ wavwrite(wav, "./doc/chirpLinear.wav", Fs=fs, nbits=32)
 
 ### Quadratic chirp example
 ```julia
+# f(t) = k * t^2 + fl, k = (fh-fl)/T^2
 wav = chirp(T, fs, fl, fh; method="quadratic");
 wavwrite(wav, "./doc/chirpQuadratic.wav", Fs=fs, nbits=32)
 ```
@@ -50,6 +52,7 @@ wavwrite(wav, "./doc/chirpQuadratic.wav", Fs=fs, nbits=32)
 
 ### Logarithmic chirp example
 ```julia
+# f(t) = k*log(t+1) + fl, k = (fh-fl)/log(T+1)
 wav = chirp(T, fs, fl, fh; method="logarithmic");
 wavwrite(wav, "./doc/chirpLogarithmic.wav", Fs=fs, nbits=32)
 ```
@@ -57,6 +60,7 @@ wavwrite(wav, "./doc/chirpLogarithmic.wav", Fs=fs, nbits=32)
 
 ### Exponential chirp example
 ```julia
+# f(t) = exp(k * t) + (fl-1), k = 1/T*log(fh-fl+1)
 wav = chirp(T, fs, fl, fh; method="exponential");
 wavwrite(wav, "./doc/chirpExponential.wav", Fs=fs, nbits=32)
 ```
