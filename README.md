@@ -14,7 +14,7 @@ or from Julia's official registries by :
 ## Two Public APIs
 ```julia
 chirp(T, fs, fl, fh; method="linear", phase=0.0) -> Array{Float64,1}
-chirp(T, fs, f::Function; phase::Real=0.0) -> Array{Float64,1}
+chirp(T, fs, f::Function; phase=0.0) -> Array{Float64,1}
 ```
 
 The first API is enough for most usages. Detials could be found via Julia's helping mode.
